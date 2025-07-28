@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Aiden Tech Tips</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+    
+    * {
+      box-sizing: border-box;
+      margin: 0; 
+      padding: 0;
+    }
+    
+    :root {
+      --primary: #6366f1;
+      --primary-dark: #4f46e5;
+      --secondary: #8b5cf6;
+      --accent: #06b6d4;
+      --bg-primary: #0f0f23;
+      --bg-secondary: #1a1a3a;
+      --bg-card: rgba(255, 255, 255, 0.05);
+      --text-primary: #ffffff;
+      --text-secondary: #a1a1aa;
+      --text-muted: #71717a;
+      --border: rgba(255, 255, 255, 0.1);
+      --shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      --glow: 0 0 20px rgba(99, 102, 241, 0.3);
+    }
+    
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.6;
+      overflow-x: hidden;
+      min-height: 100vh;
+      position: relative;
+    }
+    
+    /* Animated background */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(circle at 20% 20%, rgba(99, 102, 241, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(139, 92, 246, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 40% 60%, rgba(6, 182, 212, 0.1) 0%, transparent 50%);
+      animation: backgroundShift 20s ease-in-out infinite;
+      z-index: -1;
+    }
+    
+    @keyframes backgroundShift {
+      0%, 100% { transform: scale(1) rotate(0deg); }
+      50% { transform: scale(1.1) rotate(2deg); }
+    }
+    
+    /* Floating particles */
+    .particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+    }
+    
+    .particle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: var(--primary);
+      border-radius: 50%;
+      opacity: 0.6;
+      animation: float 6s ease-in-out infinite;
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.6; }
+      50% { transform: translateY(-20px) rotate(180deg); opacity: 1; }
+    }
+    
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 40px 20px;
+      position: relative;
+      z-index: 1;
+    }
+    
+    /* Hero Section */
+    .hero {
+      text-align: center;
+      margin-bottom: 80px;
+      padding: 60px 0;
+      position: relative;
+    }
+    
+    .logo-container {
+      position: relative;
+      display: inline-block;
+      margin-bottom: 30px;
+    }
+    
+    .logo-square {
+      width: 120px;
+      height: 120px;
+      border-radius: 24px;
+      margin: 0 auto 20px;
+      display: block;
+      box-shadow: var(--glow);
+      transition: all 0.3s ease;
+      border: 2px solid var(--border);
+      animation: logoFloat 3s ease-in-out infinite;
+    }
+    
+    @keyframes logoFloat {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+    
+    .logo-square:hover {
+      transform: scale(1.05) translateY(-5px);
+      box-shadow: 0 0 40px rgba(99, 102, 241, 0.5);
+    }
+    
+    .logo-full {
+      max-width: 320px;
+      margin: 0 auto 30px;
+      display: block;
+      filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+      animation: fadeInUp 1s ease-out;
+    }
+    
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    h1 {
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--primary), var(--secondary), var(--accent));
+      background-size: 200% 200%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: gradientShift 4s ease-in-out infinite, textGlow 2s ease-in-out infinite alternate;
+      margin-bottom: 20px;
+      line-height: 1.2;
+    }
+    
+    @keyframes gradientShift {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+    
+    @keyframes textGlow {
+      from { filter: drop-shadow(0 0 10px rgba(99, 102, 241, 0.3)); }
+      to { filter: drop-shadow(0 0 20px rgba(99, 102, 241, 0.6)); }
+    }
+    
+    .lead {
+      font-size: 1.3rem;
+      color: var(--text-secondary);
+      margin-bottom: 15px;
+      font-weight: 400;
+      animation: fadeInUp 1s ease-out 0.2s both;
+    }
+    
+    .joke {
+      font-style: italic;
+      color: var(--text-muted);
+      margin-bottom: 50px;
+      font-size: 1rem;
+      opacity: 0.8;
+      animation: fadeInUp 1s ease-out 0.4s both;
+      position: relative;
+    }
+    
+    .joke::before, .joke::after {
+      content: '✨';
+      position: absolute;
+      animation: sparkle 2s ease-in-out infinite;
+    }
+    
+    .joke::before { left: -30px; animation-delay: 0s; }
+    .joke::after { right: -30px; animation-delay: 1s; }
+    
+    @keyframes sparkle {
+      0%, 100% { opacity: 0.3; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.2); }
+    }
+    
+    /* Cards */
+    .card {
+      background: var(--bg-card);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 40px;
+      margin-bottom: 40px;
+      box-shadow: var(--shadow);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+      transition: left 0.5s;
+    }
+    
+    .card:hover::before {
+      left: 100%;
+    }
+    
+    .card:hover {
+      transform: translateY(-5px);
+      border-color: var(--primary);
+      box-shadow: 0 25px 50px -12px rgba(99, 102, 241, 0.2);
+    }
+    
+    h2 {
+      font-size: 1.8rem;
+      font-weight: 600;
+      margin-bottom: 25px;
+      color: var(--text-primary);
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    
+    h2::before {
+      content: '';
+      width: 4px;
+      height: 30px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      border-radius: 2px;
+      animation: pulse 2s ease-in-out infinite;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { opacity: 0.6; }
+      50% { opacity: 1; }
+    }
+    
+    .features {
+      list-style: none;
+      padding: 0;
+      display: grid;
+      gap: 16px;
+    }
+    
+    .features li {
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1));
+      border-radius: 12px;
+      font-weight: 500;
+      color: var(--text-primary);
+      border: 1px solid var(--border);
+      transition: all 0.3s ease;
+      position: relative;
+      cursor: pointer;
+      overflow: hidden;
+    }
+    
+    .feature-header {
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      user-select: none;
+    }
+    
+    .feature-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    
+    .feature-title::before {
+      content: '▶';
+      color: var(--primary);
+      transition: all 0.3s ease;
+      font-size: 0.9rem;
+    }
+    
+    .feature-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease, padding 0.4s ease;
+      padding: 0 24px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+    
+    .features li:hover {
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(139, 92, 246, 0.2));
+      transform: translateX(8px);
+      border-color: var(--primary);
+    }
+    
+    .features li.active {
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(139, 92, 246, 0.2));
+      border-color: var(--primary);
+    }
+    
+    .features li.active .feature-title::before {
+      transform: rotate(90deg);
+      color: var(--accent);
+    }
+    
+    .features li.active .feature-content {
+      max-height: 200px;
+      padding: 0 24px 20px 24px;
+    }
+    
+    /* Support Section */
+    .support {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+    
+    .support-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+      text-decoration: none;
+      padding: 16px 32px;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 1.1rem;
+      transition: all 0.3s ease;
+      box-shadow: 0 10px 25px rgba(99, 102, 241, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .support-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.5s;
+    }
+    
+    .support-btn:hover::before {
+      left: 100%;
+    }
+    
+    .support-btn:hover {
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 15px 35px rgba(99, 102, 241, 0.4);
+    }
+    
+    /* Contact Section */
+    .contact {
+      text-align: center;
+      color: var(--text-secondary);
+      margin-bottom: 40px;
+    }
+    
+    .contact p {
+      margin-bottom: 12px;
+      font-size: 1.1rem;
+    }
+    
+    .contact a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+    
+    .contact a::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--accent);
+      transition: width 0.3s ease;
+    }
+    
+    .contact a:hover::after {
+      width: 100%;
+    }
+    
+    .contact a:hover {
+      color: var(--text-primary);
+      transform: translateY(-1px);
+    }
+    
+    /* Footer */
+    footer {
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      padding: 30px 0;
+      border-top: 1px solid var(--border);
+      margin-top: 50px;
+      animation: fadeInUp 1s ease-out 0.6s both;
+    }
+    
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .container {
+        padding: 20px 15px;
+      }
+      
+      .hero {
+        padding: 40px 0;
+        margin-bottom: 50px;
+      }
+      
+      .card {
+        padding: 25px;
+        margin-bottom: 25px;
+      }
+      
+      h2 {
+        font-size: 1.5rem;
+      }
+      
+      .joke::before, .joke::after {
+        display: none;
+      }
+    }
+    
+    /* Scroll animations */
+    @media (prefers-reduced-motion: no-preference) {
+      .card {
+        opacity: 0;
+        transform: translateY(30px);
+        animation: slideInUp 0.8s ease-out forwards;
+      }
+      
+      .card:nth-child(2) { animation-delay: 0.1s; }
+      .card:nth-child(3) { animation-delay: 0.2s; }
+      .card:nth-child(4) { animation-delay: 0.3s; }
+      
+      @keyframes slideInUp {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="particles">
+    <div class="particle" style="left: 10%; top: 20%; animation-delay: 0s;"></div>
+    <div class="particle" style="left: 20%; top: 80%; animation-delay: 1s;"></div>
+    <div class="particle" style="left: 60%; top: 30%; animation-delay: 2s;"></div>
+    <div class="particle" style="left: 80%; top: 70%; animation-delay: 3s;"></div>
+    <div class="particle" style="left: 90%; top: 10%; animation-delay: 4s;"></div>
+    <div class="particle" style="left: 30%; top: 90%; animation-delay: 5s;"></div>
+  </div>
+
+  <div class="container">
+    <div class="hero">
+      <div class="logo-container">
+        <img src="att.png" alt="Aiden Tech Tips Logo Square" class="logo-square" />
+        <img src="aidentechtips.png" alt="Aiden Tech Tips Text Logo" class="logo-full" />
+      </div>
+      <h1>Aiden Tech Tips (also Fry Lover)</h1>
+      <p class="lead">youtube videos, product reviews and more</p>
+      <p class="joke">when will the ryzen 4070 be real</p>
+    </div>
+
+    <div class="card">
+      <h2>things i do</h2>
+      <ul class="features">
+        <li>
+          <div class="feature-header">
+            <div class="feature-title">good tutorials and tech tips including other youtube content</div>
+          </div>
+          <div class="feature-content">
+            good tutorials, tech tips, and more, good for beginners, and other content
+          </div>
+        </li>
+        <li>
+          <div class="feature-header">
+            <div class="feature-title">actual product reviews</div>
+          </div>
+          <div class="feature-content">
+            i review products frfr
+          </div>
+        </li>
+        <li>
+          <div class="feature-header">
+            <div class="feature-title">good tech advice and recommendations</div>
+          </div>
+          <div class="feature-content">
+            get nice recommendations for tech idk
+          </div>
+        </li>
+        <li>
+          <div class="feature-header">
+            <div class="feature-title">memes</div>
+          </div>
+          <div class="feature-content">
+            yes
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="card support">
+      <h2>Support Me</h2>
+      <a href="https://ko-fi.com/frylover" target="_blank" rel="noopener noreferrer" class="support-btn">
+        <span>☕</span>
+        Support Me on Ko-fi
+      </a>
+    </div>
+
+    <div class="card contact">
+      <h2>get in touch</h2>
+      <p>subscribe!!: <a href="https://www.youtube.com/@fry_lover" target="_blank" rel="noopener noreferrer">my youtube</a></p>
+      <p>da business inquiries: <a href="mailto:aidentechtips9342@gmail.com">aidentechtips9342@gmail.com</a></p>
+    </div>
+
+    <footer>
+      &copy; 2025 Aiden Tech Tips. All rights reserved.
+    </footer>
+  </div>
+
+  <script>
+    // Add smooth scroll behavior and enhanced interactions
+    document.addEventListener('DOMContentLoaded', function() {
+      // Animate cards on scroll
+      const cards = document.querySelectorAll('.card');
+      const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -100px 0px'
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.style.animationPlayState = 'running';
+          }
+        });
+      }, observerOptions);
+
+      cards.forEach(card => {
+        observer.observe(card);
+      });
+
+      // Add particle movement on mouse move
+      document.addEventListener('mousemove', (e) => {
+        const particles = document.querySelectorAll('.particle');
+        const mouseX = e.clientX / window.innerWidth;
+        const mouseY = e.clientY / window.innerHeight;
+
+        particles.forEach((particle, index) => {
+          const speed = (index + 1) * 0.5;
+          const x = mouseX * speed;
+          const y = mouseY * speed;
+          
+          particle.style.transform = `translate(${x}px, ${y}px)`;
+        });
+      });
+
+      // Add click functionality to feature dropdowns
+      const featureItems = document.querySelectorAll('.features li');
+      featureItems.forEach(item => {
+        const header = item.querySelector('.feature-header');
+        
+        header.addEventListener('click', function(e) {
+          e.stopPropagation();
+          
+          // Close other dropdowns
+          featureItems.forEach(otherItem => {
+            if (otherItem !== item) {
+              otherItem.classList.remove('active');
+            }
+          });
+          
+          // Toggle current dropdown
+          item.classList.toggle('active');
+          
+          // Add ripple effect
+          const ripple = document.createElement('div');
+          const rect = header.getBoundingClientRect();
+          const size = Math.max(rect.width, rect.height);
+          const x = e.clientX - rect.left - size / 2;
+          const y = e.clientY - rect.top - size / 2;
+          
+          ripple.style.cssText = `
+            position: absolute;
+            width: ${size}px;
+            height: ${size}px;
+            left: ${x}px;
+            top: ${y}px;
+            background: rgba(99, 102, 241, 0.3);
+            border-radius: 50%;
+            transform: scale(0);
+            animation: ripple 0.6s ease-out;
+            pointer-events: none;
+            z-index: 1;
+          `;
+          
+          header.style.position = 'relative';
+          header.appendChild(ripple);
+          
+          setTimeout(() => {
+            ripple.remove();
+          }, 600);
+        });
+      });
+
+      // Add CSS for ripple animation
+      const style = document.createElement('style');
+      style.textContent = `
+        @keyframes ripple {
+          to {
+            transform: scale(2);
+            opacity: 0;
+          }
+        }
+      `;
+      document.head.appendChild(style);
+    });
+  </script>
+</body>
+</html>
